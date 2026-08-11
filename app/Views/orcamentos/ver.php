@@ -1,5 +1,13 @@
 <?= view('templates/header', ['title' => $title ?? 'Orçamento | Lunna Gestor']) ?>
 
+<?php
+$pedidoGerado = $pedido ?? null;
+$statusOrcamento = $orcamento['status'] ?? '';
+$podeGerarPedido = empty($pedidoGerado)
+    && !in_array($statusOrcamento, ['cancelado', 'recusado'], true)
+    && temAcao('orcamentos', 'aprovar');
+?>
+
 <div class="layout">
 
     <?= view('templates/sidebar') ?>
@@ -17,7 +25,11 @@
                     Voltar
                 </a>
 
-                <?php if ($orcamento['status'] !== 'aprovado' && temAcao('orcamentos', 'aprovar')): ?>
+                <?php if (!empty($pedidoGerado) && temAcao('pedidos', 'visualizar')): ?>
+                    <a href="<?= base_url('/pedidos/ver/' . $pedidoGerado['id']) ?>" class="btn btn-success">
+                        Ver pedido
+                    </a>
+                <?php elseif ($podeGerarPedido): ?>
                     <form 
                         action="<?= base_url('/orcamentos/aprovar/' . $orcamento['id']) ?>" 
                         method="post" 

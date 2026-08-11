@@ -127,9 +127,20 @@ class Orcamentos extends BaseController
                 ->with('erro', 'Adicione pelo menos um item ao orçamento.');
         }
 
+        $itensValidos = array_filter($itens, static function ($item) {
+            return trim((string) ($item['descricao'] ?? '')) !== '';
+        });
+
+        if (empty($itensValidos)) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('erro', 'Informe a descrição de pelo menos um item do orçamento.');
+        }
+
         $subtotal = 0;
 
-        foreach ($itens as $item) {
+        foreach ($itensValidos as $item) {
             $subtotal += $this->moedaParaDecimal($item['valor_total'] ?? 0);
         }
 
@@ -139,8 +150,8 @@ class Orcamentos extends BaseController
         $dadosOrcamento = [
             'cliente_id' => $post['cliente_id'] ?? null,
             'usuario_id' => session()->get('usuario_id'),
-            'data_orcamento' => $post['data_orcamento'] ?? date('Y-m-d'),
-            'validade' => !empty($post['validade']) ? $post['validade'] : null,
+            'data_orcamento' => $this->normalizarData($post['data_orcamento'] ?? date('Y-m-d')),
+            'validade' => !empty($post['validade']) ? $this->normalizarData($post['validade']) : null,
             'prazo_entrega' => $post['prazo_entrega'] ?? null,
             'status' => $post['status'] ?? 'novo',
             'subtotal' => $subtotal,
@@ -165,15 +176,11 @@ class Orcamentos extends BaseController
                 return redirect()
                     ->back()
                     ->withInput()
-                    ->with('erros', $this->orcamentoModel->errors())
+                    ->with('erros', $this->errosSalvamento($this->orcamentoModel, 'Não foi possível salvar os dados principais do orçamento.'))
                     ->with('erro', 'Erro ao salvar os dados principais do orçamento.');
             }
 
-            foreach ($itens as $item) {
-                if (empty($item['descricao'])) {
-                    continue;
-                }
-
+            foreach ($itensValidos as $item) {
                 $largura = $this->numeroParaDecimal($item['largura'] ?? 0);
                 $altura = $this->numeroParaDecimal($item['altura'] ?? 0);
                 $quantidade = $this->numeroParaDecimal($item['quantidade'] ?? 1);
@@ -264,10 +271,17 @@ class Orcamentos extends BaseController
             ->orderBy('id', 'ASC')
             ->findAll();
 
+        $pedido = $this->pedidoModel
+            ->select('id, numero, status')
+            ->where('orcamento_id', $id)
+            ->where('ativo', 1)
+            ->first();
+
         return view('orcamentos/ver', [
             'title' => 'Orçamento ' . $orcamento['numero'] . ' | Lunna Gestor',
             'orcamento' => $orcamento,
-            'itens' => $itens
+            'itens' => $itens,
+            'pedido' => $pedido
         ]);
     }
 
@@ -516,6 +530,7 @@ class Orcamentos extends BaseController
         $ano = date('Y');
 
         $ultimo = $this->orcamentoModel
+            ->withDeleted()
             ->like('numero', "ORC-$ano-", 'after')
             ->orderBy('id', 'DESC')
             ->first();
@@ -536,6 +551,7 @@ class Orcamentos extends BaseController
         $ano = date('Y');
 
         $ultimo = $this->pedidoModel
+            ->withDeleted()
             ->like('numero', "PED-$ano-", 'after')
             ->orderBy('id', 'DESC')
             ->first();
@@ -549,6 +565,56 @@ class Orcamentos extends BaseController
         $novoSequencial = $sequencial + 1;
 
         return "PED-$ano-" . str_pad($novoSequencial, 4, '0', STR_PAD_LEFT);
+    }
+
+    private function normalizarData(?string $valor): ?string
+    {
+        if ($valor === null || trim($valor) === '') {
+            return null;
+        }
+
+        $valor = trim($valor);
+        $formatos = ['Y-m-d', 'd/m/Y'];
+
+        foreach ($formatos as $formato) {
+            $data = \DateTimeImmutable::createFromFormat('!' . $formato, $valor);
+
+            if ($data && $data->format($formato) === $valor) {
+                return $data->format('Y-m-d');
+            }
+        }
+
+        return $valor;
+    }
+
+    private function errosSalvamento($model, string $fallback): array
+    {
+        $erros = $model->errors();
+
+        if (!empty($erros)) {
+            return $erros;
+        }
+
+        $erroBanco = \Config\Database::connect()->error();
+        $codigo = (int) ($erroBanco['code'] ?? 0);
+
+        if ($codigo === 1062) {
+            return ['Já existe um registro com o mesmo número. Tente salvar novamente.'];
+        }
+
+        if (in_array($codigo, [1265, 1292, 1366], true)) {
+            return ['Algum campo foi enviado em formato inválido. Confira datas, valores e status.'];
+        }
+
+        if ($codigo === 1452) {
+            return ['Cliente, produto ou usuário vinculado não foi encontrado no banco. Atualize a página e tente novamente.'];
+        }
+
+        if ($codigo > 0) {
+            return ['Banco de dados retornou o erro ' . $codigo . '.'];
+        }
+
+        return [$fallback];
     }
 
     private function moedaParaDecimal($valor): float
