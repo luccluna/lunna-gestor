@@ -42,6 +42,8 @@ $RECYCLE.BIN/
 # These should never be under version control,
 # as it poses a security risk.
 .env
+.env.*
+!.env.example
 .vagrant
 Vagrantfile
 
@@ -59,6 +61,8 @@ Vagrantfile
 #-------------------------
 # Temporary Files
 #-------------------------
+.codex-*
+
 /writable/cache/*
 !/writable/cache/index.html
 
