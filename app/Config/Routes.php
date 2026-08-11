@@ -38,6 +38,7 @@ $routes->post('/produtos/excluir/(:num)', 'Produtos::excluir/$1');
 
 $routes->get('/estoque', 'Estoque::index');
 $routes->get('/estoque/novo', 'Estoque::novo');
+$routes->post('/estoque/importar-nota', 'Estoque::importarNota');
 $routes->post('/estoque/salvar', 'Estoque::salvar');
 $routes->get('/estoque/editar/(:num)', 'Estoque::editar/$1');
 $routes->post('/estoque/atualizar/(:num)', 'Estoque::atualizar/$1');

@@ -30,13 +30,27 @@
             </div>
         <?php endif; ?>
 
+        <?php if (session()->getFlashdata('sucesso')): ?>
+            <div class="alert alert-success">
+                <?= session()->getFlashdata('sucesso') ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('erro')): ?>
+            <div class="alert alert-danger">
+                <?= session()->getFlashdata('erro') ?>
+            </div>
+        <?php endif; ?>
+
         <?php
+            $notaImportada = session()->getFlashdata('notaImportada') ?? [];
+
             $action = $material
                 ? base_url('/estoque/atualizar/' . $material['id'])
                 : base_url('/estoque/salvar');
 
-            $valorCampo = function ($campo) use ($material) {
-                return old($campo) ?? ($material[$campo] ?? '');
+            $valorCampo = function ($campo) use ($material, $notaImportada) {
+                return old($campo) ?? ($material[$campo] ?? ($notaImportada[$campo] ?? ''));
             };
 
             $formatarDecimal = function ($valor, $casas = 3) {
@@ -66,6 +80,39 @@
             $tipoControleAtual = $valorCampo('tipo_controle') ?: 'unidade';
             $origemAtual = $valorCampo('origem') ?: 'manual';
         ?>
+
+        <?php if (!$material): ?>
+            <form action="<?= base_url('/estoque/importar-nota') ?>" method="post" enctype="multipart/form-data" class="card card-dashboard mb-4">
+                <?= csrf_field() ?>
+
+                <div class="card-body">
+                    <h5 class="fw-bold mb-2">Importar nota fiscal</h5>
+                    <p class="text-muted mb-3">
+                        Envie o XML da NF-e ou o HTML baixado no portal da nota para preencher os dados principais do material.
+                    </p>
+
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-9">
+                            <label class="form-label">Arquivo da nota (.xml, .html ou .htm)</label>
+                            <input
+                                type="file"
+                                name="arquivo_nota"
+                                class="form-control"
+                                accept=".xml,.html,.htm,text/xml,application/xml,text/html"
+                                required
+                            >
+                            <small class="text-muted">Limite de 2 MB. Revise os dados antes de cadastrar no estoque.</small>
+                        </div>
+
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-outline-dark w-100">
+                                Ler nota
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        <?php endif; ?>
 
         <form action="<?= $action ?>" method="post">
             <?= csrf_field() ?>
