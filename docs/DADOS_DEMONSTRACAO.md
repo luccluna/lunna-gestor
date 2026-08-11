@@ -60,3 +60,23 @@ Teste@123
 - A massa e ficticia e serve somente para demonstracao.
 - Nao usar estes dados como dados reais de producao.
 - Nao manter usuarios `@teste.com` ativos em ambiente de producao.
+
+## Como limpar os dados de demonstracao
+
+Antes de limpar, crie ao menos um usuario administrador real. O comando bloqueia a execucao se encontrar apenas administradores de teste, para evitar perda de acesso ao sistema.
+
+Primeiro rode a previa:
+
+```bash
+php spark demo:limpar-dados
+```
+
+Confira as contagens exibidas e faca backup do banco.
+
+Depois execute a limpeza definitiva:
+
+```bash
+php spark demo:limpar-dados --executar
+```
+
+O comando remove somente registros marcados como demonstracao, como `[TESTE DEMO]`, e-mails `@teste.com`, orcamentos `ORC-DEMO-*` e pedidos `PED-DEMO-*`.
