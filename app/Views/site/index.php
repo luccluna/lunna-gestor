@@ -43,7 +43,7 @@
                 'services' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"/><path d="M7 4v6"/><path d="M17 4v6"/><path d="M6 14h12"/><path d="M8 18h8"/></svg>',
                 'company' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/><path d="M9 9h.01"/><path d="M15 9h.01"/></svg>',
                 'contact' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>',
-                'whatsapp' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19.5 6.2 16A7.5 7.5 0 1 1 9 18.8z"/><path d="M9.5 8.8c.2 2.9 2 4.8 4.9 5.4l1.2-1.2 2 1.1c-.4 1.6-1.4 2.5-3 2.5-4.4-.1-7.1-2.8-7.4-7.2 0-1.6.8-2.6 2.3-3l1.2 2z"/></svg>',
+                'whatsapp' => '<svg class="site-btn-icon site-btn-icon-fill" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" stroke="none" focusable="false" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.6 2.33A7.85 7.85 0 0 0 1.24 11.8L.13 15.87l4.17-1.1A7.85 7.85 0 0 0 16 7.85a7.8 7.8 0 0 0-2.4-5.52ZM8.15 14.53a6.5 6.5 0 0 1-3.3-.9l-.24-.14-2.47.65.66-2.4-.16-.25a6.51 6.51 0 1 1 5.51 3.04Zm3.57-4.88c-.2-.1-1.16-.57-1.34-.64-.18-.06-.31-.1-.44.1-.13.2-.5.64-.62.77-.11.13-.23.14-.43.05-.2-.1-.83-.3-1.58-.97A5.9 5.9 0 0 1 6.22 7.6c-.11-.2-.01-.31.08-.41.08-.08.2-.23.3-.35.1-.11.13-.2.2-.33.06-.13.03-.25-.02-.35-.05-.1-.44-1.06-.6-1.45-.16-.38-.32-.33-.44-.34h-.38c-.13 0-.35.05-.53.25-.18.2-.7.68-.7 1.66s.72 1.93.82 2.06c.1.13 1.42 2.17 3.44 3.04.48.21.86.33 1.15.42.48.15.92.13 1.27.08.39-.06 1.16-.47 1.33-.93.16-.46.16-.85.11-.93-.05-.08-.18-.13-.38-.23Z"/></svg>',
                 'budget' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l1 2h3v16H5V5h3z"/><path d="M9 10h6"/><path d="M9 14h6"/><path d="M9 18h3"/></svg>',
                 'phone' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.7 19.7 0 0 1-8.6-3.1 19.3 19.3 0 0 1-6-6A19.7 19.7 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6.3 6.3l1.3-1.3a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2z"/></svg>',
                 'email' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m4 7 8 6 8-6"/></svg>',
@@ -51,6 +51,10 @@
             ];
 
             $icon = $icons[$name] ?? '';
+
+            if (str_contains($icon, 'site-btn-icon')) {
+                return $icon;
+            }
 
             return str_replace(
                 '<svg viewBox',
@@ -74,7 +78,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?= base_url('assets/css/style.css?v=20260811-2') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/style.css?v=20260811-3') ?>" rel="stylesheet">
 </head>
 
 <body class="site-page">

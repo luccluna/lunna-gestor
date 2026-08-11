@@ -141,6 +141,12 @@ body {
     stroke-linejoin: round;
 }
 
+.site-icon-btn .site-btn-icon-fill,
+.site-action-btn .site-btn-icon-fill {
+    fill: currentColor;
+    stroke: none;
+}
+
 .site-action-btn {
     min-height: 54px;
     gap: 10px;
@@ -150,6 +156,11 @@ body {
 
 .site-action-btn span {
     line-height: 1.2;
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    letter-spacing: 0;
+    text-transform: none;
 }
 
 .site-hero {
@@ -177,7 +188,7 @@ body {
     color: #ffffff;
 }
 
-.site-hero-content span,
+.site-hero-content > span,
 .site-section-heading span,
 .site-about-copy span,
 .site-contact span {
@@ -261,12 +272,12 @@ body {
 
 .site-btn-whatsapp {
     color: #ffffff;
-    background: #25d366;
+    background: #007a3d;
 }
 
 .site-btn-whatsapp:hover {
     color: #ffffff;
-    background: #1da851;
+    background: #0c8f49;
 }
 
 .site-nav .site-icon-btn.site-nav-whatsapp {
