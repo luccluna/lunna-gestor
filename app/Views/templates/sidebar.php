@@ -7,7 +7,7 @@
     <div class="sidebar-header">
         <a class="sidebar-brand" href="<?= base_url('/dashboard') ?>">
             <span class="sidebar-logo-wrap">
-                <img src="<?= base_url('assets/img/lunna/logo-lunna.png') ?>" alt="Lunna Vidraçaria">
+                <img src="<?= base_url('assets/img/lunna/logo-lunna-icon-192.png') ?>" alt="Lunna Vidraçaria">
             </span>
             <div>
                 <h5>Lunna Gestor</h5>

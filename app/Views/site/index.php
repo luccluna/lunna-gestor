@@ -1,5 +1,6 @@
 <?php
-    $logo = base_url('assets/img/lunna/logo-lunna.png');
+    $logo = base_url('assets/img/lunna/logo-lunna-horizontal-720.png');
+    $logoIcon = base_url('assets/img/lunna/logo-lunna-icon-192.png');
     $hero = base_url('assets/img/lunna/hero-portas-de-vidro.jpg');
     $whatsappUrl = whatsappUrl('5538999250451', 'Olá! Gostaria de solicitar um orçamento para vidraçaria.');
 
@@ -78,13 +79,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?= base_url('assets/css/style.css?v=20260811-6') ?>" rel="stylesheet">
+    <link rel="icon" type="image/png" href="<?= base_url('assets/img/lunna/favicon.png') ?>">
+    <link href="<?= base_url('assets/css/style.css?v=20260811-7') ?>" rel="stylesheet">
 </head>
 
 <body class="site-page">
     <header class="site-header">
         <a class="site-logo" href="<?= base_url('/') ?>" aria-label="Lunna Vidraçaria">
-            <img src="<?= $logo ?>" alt="Lunna Vidraçaria">
+            <picture>
+                <source media="(max-width: 640px)" srcset="<?= $logoIcon ?>">
+                <img src="<?= $logo ?>" alt="Lunna Vidraçaria">
+            </picture>
         </a>
 
         <nav class="site-nav" aria-label="Navegação principal">

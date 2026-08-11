@@ -1,5 +1,6 @@
 <?php
-    $logo = base_url('assets/img/lunna/logo-lunna.png');
+    $logo = base_url('assets/img/lunna/logo-lunna-horizontal-720.png');
+    $logoIcon = base_url('assets/img/lunna/logo-lunna-icon-192.png');
     $hero = base_url('assets/img/lunna/hero-portas-de-vidro.jpg');
 ?>
 
@@ -15,7 +16,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?= base_url('assets/css/style.css?v=20260811-6') ?>" rel="stylesheet">
+    <link rel="icon" type="image/png" href="<?= base_url('assets/img/lunna/favicon.png') ?>">
+    <link href="<?= base_url('assets/css/style.css?v=20260811-7') ?>" rel="stylesheet">
 </head>
 
 <body class="login-page" style="--login-hero-image: url('<?= $hero ?>');">
@@ -49,7 +51,7 @@
 
         <section class="login-card" aria-label="Acesso ao sistema">
             <div class="login-card-header">
-                <img class="login-card-logo" src="<?= $logo ?>" alt="Lunna Vidraçaria">
+                <img class="login-card-logo" src="<?= $logoIcon ?>" alt="Lunna Vidraçaria">
                 <div>
                     <h2>Acessar sistema</h2>
                     <p>Entre com seu usuário da vidraçaria.</p>
