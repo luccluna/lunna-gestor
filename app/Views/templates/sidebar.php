@@ -1,6 +1,7 @@
 <?php
     $rotaAtual = trim(service('uri')->getPath(), '/');
     $ativo = static fn (string $prefixo): string => ($rotaAtual === $prefixo || str_starts_with($rotaAtual, $prefixo . '/')) ? 'active' : '';
+    $ativoProdutos = static fn (): string => ($rotaAtual === 'produtos' || str_starts_with($rotaAtual, 'produtos/')) && !str_starts_with($rotaAtual, 'produtos/categorias') ? 'active' : '';
 ?>
 
 <aside class="sidebar">
@@ -35,7 +36,8 @@
         <?php endif; ?>
 
         <?php if (temPermissao('produtos')): ?>
-            <a class="<?= $ativo('produtos') ?>" href="<?= base_url('/produtos') ?>">Produtos e Serviços</a>
+            <a class="<?= $ativoProdutos() ?>" href="<?= base_url('/produtos') ?>">Produtos e Serviços</a>
+            <a class="<?= $ativo('produtos/categorias') ?>" href="<?= base_url('/produtos/categorias') ?>">Categorias</a>
         <?php endif; ?>
 
         <?php if (temPermissao('estoque')): ?>

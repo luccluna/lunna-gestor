@@ -24,6 +24,12 @@ $routes->post('/clientes/atualizar/(:num)', 'Clientes::atualizar/$1');
 $routes->post('/clientes/excluir/(:num)', 'Clientes::excluir/$1');
 
 $routes->get('/produtos', 'Produtos::index');
+$routes->get('/produtos/categorias', 'Produtos::categorias');
+$routes->get('/produtos/categorias/nova', 'Produtos::categoriaNova');
+$routes->post('/produtos/categorias/salvar', 'Produtos::categoriaSalvar');
+$routes->get('/produtos/categorias/editar/(:num)', 'Produtos::categoriaEditar/$1');
+$routes->post('/produtos/categorias/atualizar/(:num)', 'Produtos::categoriaAtualizar/$1');
+$routes->post('/produtos/categorias/excluir/(:num)', 'Produtos::categoriaExcluir/$1');
 $routes->get('/produtos/novo', 'Produtos::novo');
 $routes->post('/produtos/salvar', 'Produtos::salvar');
 $routes->get('/produtos/editar/(:num)', 'Produtos::editar/$1');

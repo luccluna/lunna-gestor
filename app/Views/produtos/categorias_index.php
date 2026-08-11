@@ -1,4 +1,4 @@
-<?= view('templates/header', ['title' => $title ?? 'Produtos e Serviços | Lunna Gestor']) ?>
+<?= view('templates/header', ['title' => $title ?? 'Categorias | Lunna Gestor']) ?>
 
 <div class="layout">
 
@@ -8,18 +8,18 @@
 
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h2 class="fw-bold mb-1">Produtos e Serviços</h2>
-                <p class="text-muted mb-0">Cadastre os serviços vendidos pela Lunna Vidraçaria</p>
+                <h2 class="fw-bold mb-1">Categorias</h2>
+                <p class="text-muted mb-0">Organize os produtos e serviços usados nos orçamentos</p>
             </div>
 
             <div class="d-flex gap-2">
-                <a href="<?= base_url('/produtos/categorias') ?>" class="btn btn-outline-dark">
-                    Categorias
+                <a href="<?= base_url('/produtos') ?>" class="btn btn-outline-dark">
+                    Produtos e serviços
                 </a>
 
                 <?php if (temAcao('produtos', 'criar')): ?>
-                    <a href="<?= base_url('/produtos/novo') ?>" class="btn btn-dark">
-                        Novo produto/serviço
+                    <a href="<?= base_url('/produtos/categorias/nova') ?>" class="btn btn-dark">
+                        Nova categoria
                     </a>
                 <?php endif; ?>
             </div>
@@ -39,13 +39,13 @@
 
         <div class="card card-dashboard mb-4">
             <div class="card-body">
-                <form method="get" action="<?= base_url('/produtos') ?>" class="row g-2">
+                <form method="get" action="<?= base_url('/produtos/categorias') ?>" class="row g-2">
                     <div class="col-md-10">
-                        <input 
-                            type="text" 
-                            name="busca" 
-                            class="form-control" 
-                            placeholder="Buscar por nome, categoria ou tipo"
+                        <input
+                            type="text"
+                            name="busca"
+                            class="form-control"
+                            placeholder="Buscar por nome ou descrição"
                             value="<?= esc($busca ?? '') ?>"
                         >
                     </div>
@@ -61,60 +61,37 @@
 
         <div class="card card-dashboard">
             <div class="card-body">
-
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
                         <thead>
                             <tr>
-                                <th>Produto/Serviço</th>
                                 <th>Categoria</th>
-                                <th>Tipo</th>
-                                <th>Unidade</th>
-                                <th>Valor base</th>
+                                <th>Descrição</th>
+                                <th>Itens vinculados</th>
                                 <th class="text-end">Ações</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <?php if (!empty($produtos)): ?>
-                                <?php foreach ($produtos as $produto): ?>
+                            <?php if (!empty($categorias)): ?>
+                                <?php foreach ($categorias as $categoria): ?>
                                     <tr>
                                         <td>
-                                            <strong><?= esc($produto['nome']) ?></strong>
-                                            <?php if (!empty($produto['descricao'])): ?>
-                                                <br>
-                                                <small class="text-muted"><?= esc($produto['descricao']) ?></small>
-                                            <?php endif; ?>
+                                            <strong><?= esc($categoria['nome']) ?></strong>
                                         </td>
 
                                         <td>
-                                            <?= esc($produto['categoria_nome'] ?? '-') ?>
+                                            <?= esc($categoria['descricao'] ?: '-') ?>
                                         </td>
 
                                         <td>
-                                            <?= $produto['tipo'] === 'produto' ? 'Produto' : 'Serviço' ?>
-                                        </td>
-
-                                        <td>
-                                            <?php
-                                                $unidades = [
-                                                    'm2' => 'm²',
-                                                    'metro_linear' => 'Metro linear',
-                                                    'unidade' => 'Unidade',
-                                                    'servico_fechado' => 'Serviço fechado'
-                                                ];
-                                            ?>
-                                            <?= esc($unidades[$produto['unidade_calculo']] ?? $produto['unidade_calculo']) ?>
-                                        </td>
-
-                                        <td>
-                                            R$ <?= number_format($produto['valor_base'], 2, ',', '.') ?>
+                                            <?= (int) ($categoria['produtos_vinculados'] ?? 0) ?>
                                         </td>
 
                                         <td class="text-end">
                                             <?php if (temAcao('produtos', 'editar')): ?>
-                                                <a 
-                                                    href="<?= base_url('/produtos/editar/' . $produto['id']) ?>" 
+                                                <a
+                                                    href="<?= base_url('/produtos/categorias/editar/' . $categoria['id']) ?>"
                                                     class="btn btn-sm btn-outline-dark"
                                                 >
                                                     Editar
@@ -122,11 +99,11 @@
                                             <?php endif; ?>
 
                                             <?php if (temAcao('produtos', 'excluir')): ?>
-                                                <form 
-                                                    action="<?= base_url('/produtos/excluir/' . $produto['id']) ?>" 
-                                                    method="post" 
+                                                <form
+                                                    action="<?= base_url('/produtos/categorias/excluir/' . $categoria['id']) ?>"
+                                                    method="post"
                                                     class="d-inline"
-                                                    onsubmit="return confirm('Tem certeza que deseja remover este item?')"
+                                                    onsubmit="return confirm('Tem certeza que deseja remover esta categoria?')"
                                                 >
                                                     <?= csrf_field() ?>
 
@@ -140,8 +117,8 @@
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="6" class="text-center text-muted py-4">
-                                        Nenhum produto ou serviço encontrado.
+                                    <td colspan="4" class="text-center text-muted py-4">
+                                        Nenhuma categoria encontrada.
                                     </td>
                                 </tr>
                             <?php endif; ?>
@@ -152,7 +129,6 @@
                 <div class="mt-3">
                     <?= $pager->links() ?>
                 </div>
-
             </div>
         </div>
 

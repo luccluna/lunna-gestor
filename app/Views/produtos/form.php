@@ -73,7 +73,12 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label class="form-label">Categoria</label>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label">Categoria</label>
+                                <a href="<?= base_url('/produtos/categorias') ?>" class="small text-decoration-none">
+                                    Gerenciar
+                                </a>
+                            </div>
                             <select name="categoria_id" class="form-select">
                                 <option value="">Sem categoria</option>
 
