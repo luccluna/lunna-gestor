@@ -101,13 +101,16 @@
                                 accept=".xml,.html,.htm,text/xml,application/xml,text/html"
                                 required
                             >
-                            <small class="text-muted">Limite de 2 MB. Revise os dados antes de cadastrar no estoque.</small>
                         </div>
 
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-outline-dark w-100">
                                 Ler nota
                             </button>
+                        </div>
+
+                        <div class="col-12">
+                            <small class="text-muted">Limite de 2 MB. Revise os dados antes de cadastrar no estoque.</small>
                         </div>
                     </div>
                 </div>
