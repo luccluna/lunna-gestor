@@ -46,6 +46,25 @@
 
                 return number_format((float) $valor, $casas, ',', '.');
             };
+
+            $tiposControle = [
+                'unidade' => 'Unidade',
+                'metro_linear' => 'Metro linear',
+                'metro_quadrado' => 'Metro quadrado',
+                'chapa' => 'Chapa inteira',
+                'retalho' => 'Retalho / sobra',
+                'servico_sem_estoque' => 'Servico sem estoque',
+            ];
+
+            $origens = [
+                'manual' => 'Cadastro manual',
+                'nota_compra' => 'Nota de compra',
+                'ajuste' => 'Ajuste de estoque',
+                'retalho' => 'Retalho / sobra',
+            ];
+
+            $tipoControleAtual = $valorCampo('tipo_controle') ?: 'unidade';
+            $origemAtual = $valorCampo('origem') ?: 'manual';
         ?>
 
         <form action="<?= $action ?>" method="post">
@@ -92,6 +111,72 @@
                                 value="<?= esc($valorCampo('unidade_medida') ?: 'unidade') ?>"
                                 placeholder="m2, unidade, chapa, metro"
                                 required
+                            >
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Controle *</label>
+                            <select name="tipo_controle" class="form-select" required>
+                                <?php foreach ($tiposControle as $valor => $label): ?>
+                                    <option value="<?= $valor ?>" <?= $tipoControleAtual === $valor ? 'selected' : '' ?>>
+                                        <?= esc($label) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Origem</label>
+                            <select name="origem" class="form-select">
+                                <?php foreach ($origens as $valor => $label): ?>
+                                    <option value="<?= $valor ?>" <?= $origemAtual === $valor ? 'selected' : '' ?>>
+                                        <?= esc($label) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Espessura</label>
+                            <input
+                                type="text"
+                                name="espessura"
+                                class="form-control"
+                                value="<?= esc($valorCampo('espessura')) ?>"
+                                placeholder="Exemplo: 8mm"
+                            >
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Largura</label>
+                            <input
+                                type="text"
+                                name="largura"
+                                class="form-control money"
+                                value="<?= esc($formatarDecimal($valorCampo('largura'))) ?>"
+                                placeholder="0,000"
+                            >
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Altura</label>
+                            <input
+                                type="text"
+                                name="altura"
+                                class="form-control money"
+                                value="<?= esc($formatarDecimal($valorCampo('altura'))) ?>"
+                                placeholder="0,000"
+                            >
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Comprimento</label>
+                            <input
+                                type="text"
+                                name="comprimento"
+                                class="form-control money"
+                                value="<?= esc($formatarDecimal($valorCampo('comprimento'))) ?>"
+                                placeholder="0,000"
                             >
                         </div>
 
@@ -151,7 +236,18 @@
                             >
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-3">
+                            <label class="form-label">Lote</label>
+                            <input
+                                type="text"
+                                name="lote"
+                                class="form-control"
+                                value="<?= esc($valorCampo('lote')) ?>"
+                                placeholder="Lote interno ou fornecedor"
+                            >
+                        </div>
+
+                        <div class="col-md-3">
                             <label class="form-label">Localizacao</label>
                             <input
                                 type="text"
@@ -159,6 +255,39 @@
                                 class="form-control"
                                 value="<?= esc($valorCampo('localizacao')) ?>"
                                 placeholder="Exemplo: estoque principal, prateleira A"
+                            >
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Numero da NF</label>
+                            <input
+                                type="text"
+                                name="nf_numero"
+                                class="form-control"
+                                value="<?= esc($valorCampo('nf_numero')) ?>"
+                                placeholder="Exemplo: 12345"
+                            >
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Data da compra</label>
+                            <input
+                                type="date"
+                                name="data_compra"
+                                class="form-control"
+                                value="<?= esc($valorCampo('data_compra')) ?>"
+                            >
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Chave de acesso da NF</label>
+                            <input
+                                type="text"
+                                name="nf_chave_acesso"
+                                class="form-control"
+                                maxlength="60"
+                                value="<?= esc($valorCampo('nf_chave_acesso')) ?>"
+                                placeholder="44 digitos da chave de acesso"
                             >
                         </div>
 

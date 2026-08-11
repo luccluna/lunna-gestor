@@ -87,6 +87,18 @@
 
             $tipoAtual = $valorCampo('tipo') ?: 'medicao';
             $statusAtual = $valorCampo('status') ?: 'agendado';
+            $clientesEnderecos = [];
+
+            foreach ($clientes as $cliente) {
+                $clientesEnderecos[$cliente['id']] = [
+                    'endereco' => $cliente['endereco'] ?? '',
+                    'numero' => $cliente['numero'] ?? '',
+                    'complemento' => $cliente['complemento'] ?? '',
+                    'bairro' => $cliente['bairro'] ?? '',
+                    'cidade' => $cliente['cidade'] ?? '',
+                    'estado' => $cliente['estado'] ?? '',
+                ];
+            }
         ?>
 
         <?php if ($pedido): ?>
@@ -110,7 +122,7 @@
 
                         <div class="col-md-6">
                             <label class="form-label">Cliente *</label>
-                            <select name="cliente_id" class="form-select" required>
+                            <select name="cliente_id" id="agenda-cliente" class="form-select" required>
                                 <option value="">Selecione o cliente</option>
 
                                 <?php foreach ($clientes as $cliente): ?>
@@ -225,7 +237,16 @@
             <div class="card card-dashboard mb-4">
                 <div class="card-body">
 
-                    <h5 class="fw-bold mb-3">Endereço do compromisso</h5>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Endereço do compromisso</h5>
+                            <small class="text-muted">Use o endereço do cliente como base ou altere para outro local de obra.</small>
+                        </div>
+
+                        <button type="button" id="agenda-usar-endereco-cliente" class="btn btn-outline-dark btn-sm">
+                            Usar endereço do cliente
+                        </button>
+                    </div>
 
                     <div class="row g-3">
 
@@ -234,6 +255,7 @@
                             <input 
                                 type="text" 
                                 name="endereco" 
+                                id="agenda-endereco"
                                 class="form-control"
                                 value="<?= esc($valorCampo('endereco')) ?>"
                             >
@@ -244,6 +266,7 @@
                             <input 
                                 type="text" 
                                 name="numero" 
+                                id="agenda-numero"
                                 class="form-control"
                                 value="<?= esc($valorCampo('numero')) ?>"
                             >
@@ -254,6 +277,7 @@
                             <input 
                                 type="text" 
                                 name="complemento" 
+                                id="agenda-complemento"
                                 class="form-control"
                                 value="<?= esc($valorCampo('complemento')) ?>"
                             >
@@ -264,6 +288,7 @@
                             <input 
                                 type="text" 
                                 name="bairro" 
+                                id="agenda-bairro"
                                 class="form-control"
                                 value="<?= esc($valorCampo('bairro')) ?>"
                             >
@@ -274,6 +299,7 @@
                             <input 
                                 type="text" 
                                 name="cidade" 
+                                id="agenda-cidade"
                                 class="form-control"
                                 value="<?= esc($valorCampo('cidade') ?: 'São Francisco') ?>"
                             >
@@ -284,6 +310,7 @@
                             <input 
                                 type="text" 
                                 name="estado" 
+                                id="agenda-estado"
                                 class="form-control"
                                 maxlength="2"
                                 value="<?= esc($valorCampo('estado') ?: 'MG') ?>"
@@ -325,5 +352,9 @@
     </main>
 
 </div>
+
+<script>
+    window.lunnaAgendaClientes = <?= json_encode($clientesEnderecos, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>;
+</script>
 
 <?= view('templates/footer') ?>

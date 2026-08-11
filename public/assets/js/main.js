@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     iniciarMascarasMoeda();
     iniciarOrcamento();
+    iniciarAgenda();
 });
 
 function iniciarMascarasMoeda() {
@@ -38,6 +39,56 @@ function iniciarOrcamento() {
 
     formOrcamento.addEventListener('submit', function () {
         prepararNamesItens();
+    });
+}
+
+function iniciarAgenda() {
+    const clienteSelect = document.getElementById('agenda-cliente');
+    const btnUsarEndereco = document.getElementById('agenda-usar-endereco-cliente');
+
+    if (!clienteSelect || !btnUsarEndereco || !window.lunnaAgendaClientes) {
+        return;
+    }
+
+    clienteSelect.addEventListener('change', function () {
+        aplicarEnderecoClienteAgenda(true);
+    });
+
+    btnUsarEndereco.addEventListener('click', function () {
+        aplicarEnderecoClienteAgenda(true);
+    });
+}
+
+function aplicarEnderecoClienteAgenda(forcarPreenchimento) {
+    const clienteSelect = document.getElementById('agenda-cliente');
+
+    if (!clienteSelect || !window.lunnaAgendaClientes) {
+        return;
+    }
+
+    const endereco = window.lunnaAgendaClientes[clienteSelect.value];
+
+    if (!endereco) {
+        return;
+    }
+
+    const campos = {
+        endereco: document.getElementById('agenda-endereco'),
+        numero: document.getElementById('agenda-numero'),
+        complemento: document.getElementById('agenda-complemento'),
+        bairro: document.getElementById('agenda-bairro'),
+        cidade: document.getElementById('agenda-cidade'),
+        estado: document.getElementById('agenda-estado')
+    };
+
+    Object.keys(campos).forEach(function (campo) {
+        if (!campos[campo]) {
+            return;
+        }
+
+        if (forcarPreenchimento || campos[campo].value.trim() === '') {
+            campos[campo].value = endereco[campo] || '';
+        }
     });
 }
 

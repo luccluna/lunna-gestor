@@ -153,7 +153,12 @@ class Estoque extends BaseController
                 'pedido_id' => null,
                 'usuario_id' => session()->get('usuario_id'),
                 'tipo' => 'entrada',
+                'origem' => $dados['origem'] ?? 'manual',
                 'documento' => 'Saldo inicial',
+                'nf_numero' => $dados['nf_numero'] ?? null,
+                'nf_chave_acesso' => $dados['nf_chave_acesso'] ?? null,
+                'fornecedor' => $dados['fornecedor'] ?? null,
+                'lote' => $dados['lote'] ?? null,
                 'quantidade' => $saldoInicial,
                 'custo_unitario' => (float) ($dados['custo_unitario'] ?? 0),
                 'saldo_anterior' => 0,
@@ -283,6 +288,7 @@ class Estoque extends BaseController
         }
 
         $tipo = $this->request->getPost('tipo');
+        $origem = $this->request->getPost('origem') ?: ($tipo === 'saida' ? 'pedido' : 'manual');
         $quantidade = $this->normalizarDecimal($this->request->getPost('quantidade'));
         $custoUnitario = $this->normalizarDecimal($this->request->getPost('custo_unitario'));
         $pedidoId = $this->request->getPost('pedido_id') ?: null;
@@ -307,7 +313,12 @@ class Estoque extends BaseController
             'pedido_id' => $tipo === 'saida' ? $pedidoId : null,
             'usuario_id' => session()->get('usuario_id'),
             'tipo' => $tipo,
+            'origem' => $origem,
             'documento' => $this->request->getPost('documento'),
+            'nf_numero' => $this->request->getPost('nf_numero'),
+            'nf_chave_acesso' => $this->limparChaveAcesso($this->request->getPost('nf_chave_acesso')),
+            'fornecedor' => $this->request->getPost('fornecedor'),
+            'lote' => $this->request->getPost('lote'),
             'quantidade' => $quantidade,
             'custo_unitario' => $custoUnitario,
             'saldo_anterior' => $saldoAnterior,
@@ -330,6 +341,23 @@ class Estoque extends BaseController
 
         if ($tipo === 'entrada' && $custoUnitario > 0) {
             $dadosMaterial['custo_unitario'] = $custoUnitario;
+        }
+
+        if ($tipo === 'entrada') {
+            foreach (['fornecedor', 'lote', 'nf_numero', 'nf_chave_acesso'] as $campo) {
+                $valor = $campo === 'nf_chave_acesso'
+                    ? $this->limparChaveAcesso($this->request->getPost($campo))
+                    : $this->request->getPost($campo);
+
+                if (!empty($valor)) {
+                    $dadosMaterial[$campo] = $valor;
+                }
+            }
+
+            if ($origem === 'nota_compra') {
+                $dadosMaterial['origem'] = 'nota_compra';
+                $dadosMaterial['data_compra'] = $this->request->getPost('data_movimentacao') ?: date('Y-m-d');
+            }
         }
 
         if (!$this->materialModel->update($id, $dadosMaterial)) {
@@ -402,11 +430,15 @@ class Estoque extends BaseController
 
     private function tratarDadosMaterial(array $dados): array
     {
-        foreach (['saldo_atual', 'estoque_minimo', 'custo_unitario'] as $campo) {
+        foreach (['saldo_atual', 'estoque_minimo', 'custo_unitario', 'largura', 'altura', 'comprimento'] as $campo) {
             if (isset($dados[$campo])) {
                 $dados[$campo] = $this->normalizarDecimal($dados[$campo]);
             }
         }
+
+        $dados['tipo_controle'] = ($dados['tipo_controle'] ?? '') ?: 'unidade';
+        $dados['origem'] = ($dados['origem'] ?? '') ?: 'manual';
+        $dados['nf_chave_acesso'] = $this->limparChaveAcesso($dados['nf_chave_acesso'] ?? null);
 
         if (($dados['produto_servico_id'] ?? '') === '') {
             $dados['produto_servico_id'] = null;
@@ -426,5 +458,16 @@ class Estoque extends BaseController
         }
 
         return (float) $valor;
+    }
+
+    private function limparChaveAcesso($valor): ?string
+    {
+        if ($valor === null || $valor === '') {
+            return null;
+        }
+
+        $valor = preg_replace('/\D+/', '', (string) $valor);
+
+        return $valor !== '' ? $valor : null;
     }
 }

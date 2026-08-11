@@ -54,6 +54,9 @@ Vagrantfile
 /database/*.sql
 /database/*.sql.gz
 /database/*.zip
+/database/backups/*.sql
+/database/backups/*.sql.gz
+/database/backups/*.zip
 
 # Original briefings may contain real customer contact data.
 /docs/briefing-lunna-vidracaria/originais/

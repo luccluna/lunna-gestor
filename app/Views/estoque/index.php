@@ -31,6 +31,17 @@
             </div>
         <?php endif; ?>
 
+        <?php
+            $tiposControle = [
+                'unidade' => 'Unidade',
+                'metro_linear' => 'Metro linear',
+                'metro_quadrado' => 'm²',
+                'chapa' => 'Chapa',
+                'retalho' => 'Retalho',
+                'servico_sem_estoque' => 'Servico',
+            ];
+        ?>
+
         <div class="row g-3 mb-4">
             <div class="col-md-4">
                 <div class="card card-dashboard h-100">
@@ -100,6 +111,7 @@
                                 <th>Material</th>
                                 <th>Fornecedor</th>
                                 <th>Local</th>
+                                <th>Controle</th>
                                 <th>Saldo</th>
                                 <th>Minimo</th>
                                 <th>Custo</th>
@@ -115,6 +127,7 @@
                                         $saldo = (float) $material['saldo_atual'];
                                         $minimo = (float) $material['estoque_minimo'];
                                         $baixo = $saldo <= $minimo;
+                                        $tipoControle = $material['tipo_controle'] ?? 'unidade';
                                     ?>
                                     <tr>
                                         <td>
@@ -127,6 +140,19 @@
 
                                         <td><?= esc($material['fornecedor'] ?: '-') ?></td>
                                         <td><?= esc($material['localizacao'] ?: '-') ?></td>
+                                        <td>
+                                            <strong><?= esc($tiposControle[$tipoControle] ?? $tipoControle) ?></strong>
+
+                                            <?php if (!empty($material['espessura'])): ?>
+                                                <br>
+                                                <small class="text-muted"><?= esc($material['espessura']) ?></small>
+                                            <?php endif; ?>
+
+                                            <?php if (!empty($material['lote'])): ?>
+                                                <br>
+                                                <small class="text-muted">Lote: <?= esc($material['lote']) ?></small>
+                                            <?php endif; ?>
+                                        </td>
                                         <td>
                                             <strong><?= number_format($saldo, 3, ',', '.') ?></strong>
                                             <small class="text-muted"><?= esc($material['unidade_medida']) ?></small>
@@ -172,7 +198,7 @@
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="8" class="text-center text-muted py-4">
+                                    <td colspan="9" class="text-center text-muted py-4">
                                         Nenhum material encontrado no estoque.
                                     </td>
                                 </tr>
