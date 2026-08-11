@@ -627,6 +627,22 @@ body {
     margin-bottom: 24px;
 }
 
+.pedido-header,
+.pedido-section-heading {
+    gap: 16px;
+}
+
+.pedido-actions {
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.pedido-actions .btn,
+.pedido-section-heading .btn {
+    white-space: nowrap;
+}
+
 .page-kicker {
     display: inline-block;
     margin-bottom: 6px;
@@ -683,6 +699,11 @@ body {
     text-transform: uppercase;
     letter-spacing: .04em;
     color: #6b7280;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .alert {
@@ -1155,15 +1176,43 @@ body {
 
     .sidebar {
         width: 100%;
+        min-height: auto;
+    }
+
+    .sidebar-header {
+        padding: 16px;
+    }
+
+    .sidebar-brand {
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .sidebar-logo-wrap {
+        width: 150px;
+    }
+
+    .sidebar-user {
+        margin-top: 12px;
     }
 
     .sidebar-nav {
         flex-direction: row;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 12px 16px 16px;
+        scrollbar-width: thin;
     }
 
     .sidebar-section {
-        width: 100%;
+        display: none;
+    }
+
+    .sidebar-nav a {
+        flex: 0 0 auto;
+        white-space: nowrap;
     }
 
     .sidebar-logout {
@@ -1172,6 +1221,7 @@ body {
 
     .main-content {
         padding: 20px;
+        width: 100%;
     }
 
     .login-shell {
@@ -1272,6 +1322,73 @@ body {
     .doc-links,
     .login-metrics {
         grid-template-columns: 1fr;
+    }
+
+    .sidebar-header {
+        padding: 12px 14px;
+    }
+
+    .sidebar-logo-wrap {
+        width: 126px;
+        padding: 7px 8px;
+    }
+
+    .sidebar-header h5 {
+        font-size: 16px;
+    }
+
+    .sidebar-user {
+        padding: 10px;
+    }
+
+    .main-content {
+        padding: 14px;
+    }
+
+    .card-dashboard .card-body {
+        padding: 16px;
+    }
+
+    .pedido-header {
+        align-items: stretch !important;
+        flex-direction: column;
+    }
+
+    .pedido-header h2 {
+        font-size: 26px;
+        line-height: 1.12;
+    }
+
+    .pedido-actions {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+    }
+
+    .pedido-actions .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding-inline: 10px;
+        white-space: normal;
+    }
+
+    .pedido-section-heading {
+        align-items: stretch !important;
+        flex-direction: column;
+    }
+
+    .pedido-section-heading .btn {
+        width: 100%;
+    }
+
+    .table-responsive .table {
+        min-width: 680px;
+    }
+
+    .table-responsive .table-sm {
+        min-width: 560px;
     }
 
     .page-title .btn {

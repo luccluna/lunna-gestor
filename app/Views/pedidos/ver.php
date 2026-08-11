@@ -6,7 +6,7 @@
 
     <main class="main-content">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="page-title pedido-header d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2 class="fw-bold mb-1">Pedido <?= esc($pedido['numero']) ?></h2>
                 <p class="text-muted mb-0">
@@ -14,7 +14,7 @@
                 </p>
             </div>
 
-            <div class="d-flex gap-2">
+            <div class="pedido-actions d-flex gap-2">
                 <a href="<?= base_url('/pedidos') ?>" class="btn btn-outline-dark">
                     Voltar
                 </a>
@@ -236,7 +236,7 @@
         <div class="col-md-5">
             <div class="card card-dashboard h-100">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="pedido-section-heading d-flex justify-content-between align-items-center mb-3">
                         <h5 class="fw-bold mb-0">Resumo financeiro</h5>
 
                         <a 
@@ -364,7 +364,7 @@
         <div class="card card-dashboard mt-4">
             <div class="card-body">
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="pedido-section-heading d-flex justify-content-between align-items-center mb-3">
                     <div>
                         <h5 class="fw-bold mb-1">Pagamentos do pedido</h5>
                         <p class="text-muted mb-0">Entradas, parcelas e saldos vinculados a este pedido</p>
