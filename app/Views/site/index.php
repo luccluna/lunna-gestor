@@ -217,6 +217,11 @@
     <footer class="site-footer">
         <span>Lunna Vidraçaria © <?= date('Y') ?></span>
         <span>Vidros, alumínio, box e acabamentos em São Francisco-MG</span>
+        <span>
+            Desenvolvido por
+            <a href="https://wa.me/5538984179499" target="_blank" rel="noopener">Luccas Luna</a>
+            · <a href="tel:+5538984179499">(38) 98417-9499</a>
+        </span>
     </footer>
 </body>
 </html>
