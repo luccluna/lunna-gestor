@@ -50,7 +50,13 @@
                 'instagram' => '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3"/><path d="M17 7h.01"/></svg>',
             ];
 
-            return $icons[$name] ?? '';
+            $icon = $icons[$name] ?? '';
+
+            return str_replace(
+                '<svg viewBox',
+                '<svg class="site-btn-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false" viewBox',
+                $icon
+            );
         }
     }
 ?>
@@ -68,7 +74,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?= base_url('assets/css/style.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/style.css?v=20260811-2') ?>" rel="stylesheet">
 </head>
 
 <body class="site-page">
@@ -105,11 +111,11 @@
                 <p>Vidros, esquadrias, box, espelhos e acabamentos para obras residenciais, comerciais e reformas.</p>
 
                 <div class="site-hero-actions">
-                    <a class="site-action-btn site-btn-primary" href="#contato" aria-label="Solicitar orçamento" title="Solicitar orçamento">
+                    <a class="site-action-btn site-btn site-btn-primary" href="#contato" aria-label="Solicitar orçamento" title="Solicitar orçamento">
                         <?= siteIcon('budget') ?>
                         <span>Solicitar orçamento</span>
                     </a>
-                    <a class="site-action-btn site-btn-whatsapp" href="<?= esc($whatsappUrl) ?>" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp" title="Chamar no WhatsApp">
+                    <a class="site-action-btn site-btn site-btn-whatsapp" href="<?= esc($whatsappUrl) ?>" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp" title="Chamar no WhatsApp">
                         <?= siteIcon('whatsapp') ?>
                         <span>Chamar no WhatsApp</span>
                     </a>
@@ -184,19 +190,19 @@
             </div>
 
             <div class="site-contact-actions">
-                <a class="site-icon-btn site-btn-primary" href="<?= esc($whatsappUrl) ?>" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp" title="Chamar no WhatsApp">
+                <a class="site-icon-btn site-btn site-btn-primary" href="<?= esc($whatsappUrl) ?>" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp" title="Chamar no WhatsApp">
                     <?= siteIcon('whatsapp') ?>
                     <span>WhatsApp</span>
                 </a>
-                <a class="site-icon-btn site-btn-outline" href="tel:+553836311901" aria-label="Ligar para a Lunna" title="Ligar">
+                <a class="site-icon-btn site-btn site-btn-outline" href="tel:+553836311901" aria-label="Ligar para a Lunna" title="Ligar">
                     <?= siteIcon('phone') ?>
                     <span>Telefone</span>
                 </a>
-                <a class="site-icon-btn site-btn-outline" href="mailto:contato@lunnavidracaria.com.br" aria-label="Enviar e-mail" title="E-mail">
+                <a class="site-icon-btn site-btn site-btn-outline" href="mailto:contato@lunnavidracaria.com.br" aria-label="Enviar e-mail" title="E-mail">
                     <?= siteIcon('email') ?>
                     <span>E-mail</span>
                 </a>
-                <a class="site-icon-btn site-btn-outline" href="https://www.instagram.com/lunnavidracariasf/" target="_blank" rel="noopener" aria-label="Abrir Instagram" title="Instagram">
+                <a class="site-icon-btn site-btn site-btn-outline" href="https://www.instagram.com/lunnavidracariasf/" target="_blank" rel="noopener" aria-label="Abrir Instagram" title="Instagram">
                     <?= siteIcon('instagram') ?>
                     <span>Instagram</span>
                 </a>

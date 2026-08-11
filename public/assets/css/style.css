@@ -100,10 +100,19 @@ body {
     text-decoration: none;
 }
 
+.site-btn-icon {
+    display: block;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+}
+
 .site-icon-btn {
     width: 46px;
     height: 46px;
     padding: 0;
+    min-width: 46px;
+    min-height: 46px;
 }
 
 .site-nav .site-icon-btn {
@@ -137,6 +146,10 @@ body {
     gap: 10px;
     padding: 14px 18px;
     min-width: 190px;
+}
+
+.site-action-btn span {
+    line-height: 1.2;
 }
 
 .site-hero {
@@ -212,6 +225,20 @@ body {
     text-decoration: none;
 }
 
+.site-icon-btn.site-btn {
+    width: 46px;
+    min-width: 46px;
+    height: 46px;
+    min-height: 46px;
+    padding: 0;
+}
+
+.site-action-btn.site-btn {
+    min-height: 54px;
+    gap: 10px;
+    padding: 14px 18px;
+}
+
 .site-btn-primary {
     color: #ffffff;
     background: #006634;
@@ -240,6 +267,11 @@ body {
 .site-btn-whatsapp:hover {
     color: #ffffff;
     background: #1da851;
+}
+
+.site-nav .site-icon-btn.site-nav-whatsapp {
+    border-color: #006634;
+    background: #006634;
 }
 
 .site-btn-outline {
@@ -1183,7 +1215,9 @@ body {
     .site-hero-actions {
         display: grid;
         grid-template-columns: repeat(2, 58px);
+        justify-content: center;
         gap: 12px;
+        width: 100%;
     }
 
     .site-action-btn {
@@ -1206,6 +1240,7 @@ body {
     .site-contact-actions {
         display: grid;
         grid-template-columns: repeat(4, 46px);
+        justify-content: center;
         width: 100%;
         gap: 8px;
     }
