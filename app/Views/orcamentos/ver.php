@@ -6,13 +6,13 @@
 
     <main class="main-content">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="page-title pedido-header d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2 class="fw-bold mb-1">Orçamento <?= esc($orcamento['numero']) ?></h2>
                 <p class="text-muted mb-0">Visualização completa da proposta</p>
             </div>
 
-            <div class="d-flex gap-2">
+            <div class="pedido-actions d-flex gap-2">
                 <a href="<?= base_url('/orcamentos') ?>" class="btn btn-outline-dark">
                     Voltar
                 </a>

@@ -638,6 +638,10 @@ body {
     flex-wrap: wrap;
 }
 
+.pedido-actions > form {
+    display: inline-flex;
+}
+
 .pedido-actions .btn,
 .pedido-section-heading .btn {
     white-space: nowrap;
@@ -1372,6 +1376,11 @@ body {
         min-height: 42px;
         padding-inline: 10px;
         white-space: normal;
+    }
+
+    .pedido-actions > form,
+    .pedido-actions > form .btn {
+        width: 100%;
     }
 
     .pedido-section-heading {
