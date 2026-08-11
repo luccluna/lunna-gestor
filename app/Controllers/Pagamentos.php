@@ -108,7 +108,8 @@ class Pagamentos extends BaseController
             'title' => 'Novo Pagamento | Lunna Gestor',
             'pagamento' => null,
             'pedido' => $pedido,
-            'pedidos' => $pedidos
+            'pedidos' => $pedidos,
+            'resumoPedido' => $pedido ? $this->resumoFinanceiroPedido((int) $pedido['id']) : null
         ]);
     }
 
@@ -167,7 +168,8 @@ class Pagamentos extends BaseController
             'title' => 'Editar Pagamento | Lunna Gestor',
             'pagamento' => $pagamento,
             'pedido' => $pedido,
-            'pedidos' => $pedidos
+            'pedidos' => $pedidos,
+            'resumoPedido' => $pedido ? $this->resumoFinanceiroPedido((int) $pedido['id']) : null
         ]);
     }
 
@@ -301,6 +303,35 @@ class Pagamentos extends BaseController
             ->join('clientes', 'clientes.id = pedidos.cliente_id')
             ->where('pedidos.id', $pedidoId)
             ->first();
+    }
+
+    private function resumoFinanceiroPedido(int $pedidoId): array
+    {
+        $pedido = $this->pedidoModel->find($pedidoId);
+
+        if (!$pedido) {
+            return [
+                'total_pedido' => 0,
+                'total_pago' => 0,
+                'saldo_restante' => 0,
+            ];
+        }
+
+        $pago = $this->pagamentoModel
+            ->selectSum('valor')
+            ->where('pedido_id', $pedidoId)
+            ->where('ativo', 1)
+            ->where('status', 'pago')
+            ->first();
+
+        $totalPedido = (float) $pedido['total'];
+        $totalPago = (float) ($pago['valor'] ?? 0);
+
+        return [
+            'total_pedido' => $totalPedido,
+            'total_pago' => $totalPago,
+            'saldo_restante' => max($totalPedido - $totalPago, 0),
+        ];
     }
 
     private function moedaParaDecimal($valor): float

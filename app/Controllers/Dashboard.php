@@ -108,11 +108,7 @@ class Dashboard extends BaseController
             ->where('data_pagamento <=', $fimMes)
             ->first();
 
-        $aReceber = $this->pagamentoModel
-            ->selectSum('valor')
-            ->where('ativo', 1)
-            ->whereIn('status', ['pendente', 'atrasado'])
-            ->first();
+        $aReceber = $this->calcularSaldoAReceber();
 
         $faturamentoPrevistoMes = $this->pedidoModel
             ->selectSum('total')
@@ -172,7 +168,7 @@ class Dashboard extends BaseController
             'pagamentosAtrasados' => $pagamentosAtrasados,
 
             'recebidoMes' => (float) ($recebidoMes['valor'] ?? 0),
-            'aReceber' => (float) ($aReceber['valor'] ?? 0),
+            'aReceber' => $aReceber,
             'faturamentoPrevistoMes' => (float) ($faturamentoPrevistoMes['total'] ?? 0),
             'materiaisBaixoEstoque' => $materiaisBaixoEstoque,
 
@@ -180,6 +176,28 @@ class Dashboard extends BaseController
             'pedidosRecentes' => $pedidosRecentes,
             'agendaProximos' => $agendaProximos,
         ]);
+    }
+
+    private function calcularSaldoAReceber(): float
+    {
+        $db = \Config\Database::connect();
+
+        $pagamentosConfirmados = $db->table('pagamentos')
+            ->select('pedido_id, SUM(valor) AS total_pago')
+            ->where('ativo', 1)
+            ->where('status', 'pago')
+            ->groupBy('pedido_id')
+            ->getCompiledSelect();
+
+        $resultado = $db->table('pedidos')
+            ->select('SUM(GREATEST(pedidos.total - COALESCE(pagos.total_pago, 0), 0)) AS saldo')
+            ->join("($pagamentosConfirmados) pagos", 'pagos.pedido_id = pedidos.id', 'left')
+            ->where('pedidos.ativo', 1)
+            ->whereNotIn('pedidos.status', ['cancelado'])
+            ->get()
+            ->getRowArray();
+
+        return (float) ($resultado['saldo'] ?? 0);
     }
 
 }

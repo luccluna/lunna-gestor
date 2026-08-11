@@ -125,11 +125,11 @@
             <div class="col-md-6">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
-                        <small class="text-muted">Valor a receber</small>
+                        <small class="text-muted">Saldo a receber</small>
                         <h3 class="fw-bold mt-2 mb-0">
                             R$ <?= number_format($aReceber, 2, ',', '.') ?>
                         </h3>
-                        <small class="text-muted">Pendentes + atrasados</small>
+                        <small class="text-muted">Saldo dos pedidos menos valores pagos</small>
                     </div>
                 </div>
             </div>

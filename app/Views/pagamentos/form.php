@@ -103,13 +103,32 @@
         ?>
 
         <?php if ($pedido): ?>
+            <?php
+                $resumoPedido = $resumoPedido ?? [
+                    'total_pedido' => (float) ($pedido['total'] ?? 0),
+                    'total_pago' => 0,
+                    'saldo_restante' => (float) ($pedido['total'] ?? 0),
+                ];
+            ?>
             <div class="alert alert-info">
-                Pagamento vinculado ao pedido 
-                <strong><?= esc($pedido['numero']) ?></strong>
-                do cliente 
-                <strong><?= esc($pedido['cliente_nome']) ?></strong>.
-                Total do pedido:
-                <strong>R$ <?= number_format($pedido['total'], 2, ',', '.') ?></strong>.
+                <div class="d-flex flex-wrap justify-content-between gap-3">
+                    <div>
+                        Pagamento vinculado ao pedido
+                        <strong><?= esc($pedido['numero']) ?></strong>
+                        do cliente
+                        <strong><?= esc($pedido['cliente_nome']) ?></strong>.
+                        <br>
+                        <small>
+                            Somente pagamentos com status <strong>Pago</strong> abatem o saldo do pedido.
+                        </small>
+                    </div>
+
+                    <div class="text-md-end">
+                        <div>Total do pedido: <strong>R$ <?= number_format($resumoPedido['total_pedido'], 2, ',', '.') ?></strong></div>
+                        <div>Recebido confirmado: <strong>R$ <?= number_format($resumoPedido['total_pago'], 2, ',', '.') ?></strong></div>
+                        <div>Saldo restante: <strong>R$ <?= number_format($resumoPedido['saldo_restante'], 2, ',', '.') ?></strong></div>
+                    </div>
+                </div>
             </div>
         <?php endif; ?>
 
@@ -206,6 +225,9 @@
                                     </option>
                                 <?php endforeach; ?>
                             </select>
+                            <small class="text-muted d-block mt-1">
+                                Use Pago quando o dinheiro ja entrou. Pendente nao abate do saldo.
+                            </small>
                         </div>
 
                         <div class="col-md-3">
