@@ -134,7 +134,7 @@
 
         <section class="site-proof" aria-label="Diferenciais">
             <div>
-                <strong>+21 anos</strong>
+                <strong>+30 anos</strong>
                 <span>de mercado</span>
             </div>
             <div>

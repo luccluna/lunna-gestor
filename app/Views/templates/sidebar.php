@@ -66,7 +66,7 @@
             <a class="<?= $ativo('usuarios') ?>" href="<?= base_url('/usuarios') ?>">Usuários</a>
         <?php endif; ?>
 
-        <a class="sidebar-site-link" href="<?= base_url('/') ?>">Página pública</a>
+        <a class="sidebar-site-link" href="<?= base_url('/') ?>" target="_blank" rel="noopener">Página pública</a>
         <a class="sidebar-logout" href="<?= base_url('/logout') ?>">Sair</a>
     </nav>
 </aside>
