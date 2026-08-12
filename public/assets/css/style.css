@@ -715,6 +715,24 @@ body {
     min-height: 42px;
 }
 
+.form-control[type="file"] {
+    height: 42px;
+    min-height: 42px;
+    padding: 0;
+    overflow: hidden;
+    line-height: 42px;
+}
+
+.form-control[type="file"]::file-selector-button {
+    height: 42px;
+    margin: 0 12px 0 0;
+    padding: 0 16px;
+    border: 0;
+    border-right: 1px solid #d8dee6;
+    border-radius: 0;
+    line-height: 42px;
+}
+
 .form-control:focus,
 .form-select:focus {
     border-color: #006634;
