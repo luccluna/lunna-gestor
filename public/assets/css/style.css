@@ -669,6 +669,24 @@ body {
     white-space: nowrap;
 }
 
+.table td.text-end {
+    white-space: nowrap;
+}
+
+.table td.text-end .btn,
+.table td.text-end form {
+    margin: 3px 0 3px 6px;
+}
+
+.table td.text-end .btn:first-child,
+.table td.text-end form:first-child {
+    margin-left: 0;
+}
+
+.table td.text-end form .btn {
+    margin: 0;
+}
+
 .page-kicker {
     display: inline-block;
     margin-bottom: 6px;
@@ -1621,6 +1639,15 @@ body {
     .dashboard-list-card .table-sm th:nth-child(n+4),
     .dashboard-list-card .table-sm td:nth-child(n+4) {
         display: none;
+    }
+
+    .table td.text-end {
+        white-space: normal;
+    }
+
+    .table td.text-end .btn,
+    .table td.text-end form {
+        margin: 4px 0 4px 6px;
     }
 
     form > .d-flex.justify-content-end.gap-2 {
