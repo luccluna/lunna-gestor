@@ -6,7 +6,7 @@
 
     <main class="main-content">
 
-        <div class="page-title d-flex justify-content-between align-items-center">
+        <div class="page-title dashboard-page-title d-flex justify-content-between align-items-center">
             <div>
                 <h2 class="fw-bold mb-1">Dashboard</h2>
                 <p class="text-muted mb-0">Visão geral da Lunna Vidraçaria</p>

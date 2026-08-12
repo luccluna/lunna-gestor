@@ -1579,6 +1579,37 @@ body {
         white-space: normal;
     }
 
+    .main-content > .dashboard-page-title {
+        align-items: flex-start !important;
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 8px 12px;
+    }
+
+    .dashboard-page-title h2 {
+        font-size: 26px;
+        line-height: 1.12;
+    }
+
+    .dashboard-page-title p {
+        font-size: 14px;
+        line-height: 1.25;
+    }
+
+    .dashboard-page-title .text-end {
+        padding-top: 2px;
+        white-space: nowrap;
+    }
+
+    .dashboard-page-title .text-end small {
+        font-size: 11px;
+    }
+
+    .dashboard-page-title .text-end .fw-bold {
+        font-size: 18px;
+        line-height: 1.2;
+    }
+
     .card-dashboard .d-flex.justify-content-between.align-items-center.mb-3 {
         align-items: stretch !important;
         flex-direction: column;
