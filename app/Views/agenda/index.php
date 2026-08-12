@@ -131,6 +131,7 @@
                         <tbody>
                             <?php if (!empty($agenda)): ?>
                                 <?php foreach ($agenda as $item): ?>
+                                    <?php $tituloAgenda = $item['titulo_exibicao'] ?? $item['titulo']; ?>
                                     <tr>
                                         <td>
                                             <strong><?= date('d/m/Y', strtotime($item['data_agenda'])) ?></strong>
@@ -142,10 +143,16 @@
                                         </td>
 
                                         <td>
-                                            <strong><?= esc($item['titulo']) ?></strong>
+                                            <strong><?= esc($tituloAgenda) ?></strong>
                                             <br>
                                             <small class="text-muted">
                                                 <?= esc($tipos[$item['tipo']] ?? $item['tipo']) ?>
+                                                <?php if (
+                                                    !empty($item['servico_resumo']) &&
+                                                    stripos((string) $tituloAgenda, (string) $item['servico_resumo']) === false
+                                                ): ?>
+                                                    · <?= esc($item['servico_resumo']) ?>
+                                                <?php endif; ?>
                                             </small>
                                         </td>
 

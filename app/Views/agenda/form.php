@@ -50,6 +50,7 @@
                     $mapa = [
                         'cliente_id' => 'cliente_id',
                         'pedido_id' => 'id',
+                        'titulo' => 'servico_titulo',
                         'endereco' => 'endereco',
                         'numero' => 'cliente_numero',
                         'complemento' => 'complemento',

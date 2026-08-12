@@ -5,18 +5,21 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\AgendaModel;
 use App\Models\ClienteModel;
+use App\Models\OrcamentoItemModel;
 use App\Models\PedidoModel;
 
 class Agenda extends BaseController
 {
     protected $agendaModel;
     protected $clienteModel;
+    protected $orcamentoItemModel;
     protected $pedidoModel;
 
     public function __construct()
     {
         $this->agendaModel = new AgendaModel();
         $this->clienteModel = new ClienteModel();
+        $this->orcamentoItemModel = new OrcamentoItemModel();
         $this->pedidoModel = new PedidoModel();
     }
 
@@ -45,7 +48,13 @@ class Agenda extends BaseController
         $data = $this->request->getGet('data');
 
         $builder = $this->agendaModel
-            ->select('agenda.*, clientes.nome AS cliente_nome, clientes.whatsapp AS cliente_whatsapp, pedidos.numero AS pedido_numero')
+            ->select('
+                agenda.*,
+                clientes.nome AS cliente_nome,
+                clientes.whatsapp AS cliente_whatsapp,
+                pedidos.numero AS pedido_numero,
+                pedidos.orcamento_id AS pedido_orcamento_id
+            ')
             ->join('clientes', 'clientes.id = agenda.cliente_id')
             ->join('pedidos', 'pedidos.id = agenda.pedido_id', 'left')
             ->where('agenda.ativo', 1)
@@ -74,9 +83,12 @@ class Agenda extends BaseController
             $builder->where('agenda.data_agenda', $data);
         }
 
+        $agenda = $builder->paginate(10);
+        $this->adicionarResumoServicosAgenda($agenda);
+
         return view('agenda/index', [
             'title' => 'Agenda | Lunna Gestor',
-            'agenda' => $builder->paginate(10),
+            'agenda' => $agenda,
             'pager' => $this->agendaModel->pager,
             'busca' => $busca,
             'tipo' => $tipo,
@@ -308,9 +320,9 @@ class Agenda extends BaseController
 
     private function buscarPedidoComCliente($pedidoId)
     {
-        return $this->pedidoModel
+        $pedido = $this->pedidoModel
             ->select('
-                pedidos.*, 
+                pedidos.*,
                 clientes.nome AS cliente_nome,
                 clientes.id AS cliente_id,
                 clientes.whatsapp,
@@ -324,5 +336,130 @@ class Agenda extends BaseController
             ->join('clientes', 'clientes.id = pedidos.cliente_id')
             ->where('pedidos.id', $pedidoId)
             ->first();
+
+        if ($pedido) {
+            $resumos = $this->resumosServicosPorOrcamentos([(int) $pedido['orcamento_id']]);
+            $pedido['servico_resumo'] = $resumos[(int) $pedido['orcamento_id']] ?? '';
+            $pedido['servico_titulo'] = $pedido['servico_resumo'] !== ''
+                ? $this->tituloServicoAgenda('instalacao', $pedido['servico_resumo'])
+                : '';
+        }
+
+        return $pedido;
+    }
+
+    private function adicionarResumoServicosAgenda(array &$agenda): void
+    {
+        $orcamentoIds = [];
+
+        foreach ($agenda as $item) {
+            if (!empty($item['pedido_orcamento_id'])) {
+                $orcamentoIds[] = (int) $item['pedido_orcamento_id'];
+            }
+        }
+
+        $resumos = $this->resumosServicosPorOrcamentos($orcamentoIds);
+
+        foreach ($agenda as &$item) {
+            $resumo = $resumos[(int) ($item['pedido_orcamento_id'] ?? 0)] ?? null;
+            $item['servico_resumo'] = $resumo;
+
+            if ($this->tituloGenericoPedido($item['titulo'] ?? '', $item['pedido_numero'] ?? null) && $resumo) {
+                $item['titulo_exibicao'] = $this->tituloServicoAgenda($item['tipo'] ?? '', $resumo);
+                continue;
+            }
+
+            $item['titulo_exibicao'] = $item['titulo'] ?? '';
+        }
+    }
+
+    private function resumosServicosPorOrcamentos(array $orcamentoIds): array
+    {
+        $orcamentoIds = array_values(array_unique(array_filter($orcamentoIds)));
+
+        if (empty($orcamentoIds)) {
+            return [];
+        }
+
+        $itens = $this->orcamentoItemModel
+            ->select('orcamento_id, descricao')
+            ->whereIn('orcamento_id', $orcamentoIds)
+            ->orderBy('id', 'ASC')
+            ->findAll();
+
+        $descricoes = [];
+
+        foreach ($itens as $item) {
+            $orcamentoId = (int) $item['orcamento_id'];
+            $descricao = trim((string) ($item['descricao'] ?? ''));
+
+            if ($descricao === '') {
+                continue;
+            }
+
+            $descricoes[$orcamentoId][] = $descricao;
+        }
+
+        $resumos = [];
+
+        foreach ($descricoes as $orcamentoId => $listaDescricoes) {
+            $resumos[$orcamentoId] = $this->resumirDescricoesItens($listaDescricoes);
+        }
+
+        return $resumos;
+    }
+
+    private function resumirDescricoesItens(array $descricoes): string
+    {
+        $descricoes = array_values(array_unique(array_filter($descricoes)));
+
+        if (empty($descricoes)) {
+            return '';
+        }
+
+        if (count($descricoes) === 1) {
+            return $descricoes[0];
+        }
+
+        $primeiras = array_slice($descricoes, 0, 2);
+        $resumo = implode(' + ', $primeiras);
+        $restantes = count($descricoes) - count($primeiras);
+
+        if ($restantes > 0) {
+            $resumo .= ' +' . $restantes . ' item(ns)';
+        }
+
+        return $resumo;
+    }
+
+    private function tituloGenericoPedido(string $titulo, ?string $pedidoNumero): bool
+    {
+        $titulo = trim($titulo);
+
+        if ($titulo === '') {
+            return true;
+        }
+
+        if ($pedidoNumero && stripos($titulo, $pedidoNumero) !== false) {
+            return true;
+        }
+
+        return (bool) preg_match('/pedido\s+ped-/i', $titulo);
+    }
+
+    private function tituloServicoAgenda(string $tipo, string $resumo): string
+    {
+        $prefixos = [
+            'medicao' => 'Medição',
+            'instalacao' => 'Instalação',
+            'manutencao' => 'Manutenção',
+            'retorno' => 'Retorno',
+            'entrega' => 'Entrega',
+            'visita_comercial' => 'Visita',
+        ];
+
+        $prefixo = $prefixos[$tipo] ?? 'Serviço';
+
+        return $prefixo . ' de ' . $resumo;
     }
 }
