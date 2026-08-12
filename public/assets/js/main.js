@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     iniciarMascarasMoeda();
+    iniciarMascarasContato();
     iniciarOrcamento();
     iniciarAgenda();
 });
@@ -39,6 +40,24 @@ function iniciarOrcamento() {
 
     formOrcamento.addEventListener('submit', function () {
         prepararNamesItens();
+    });
+}
+
+function iniciarMascarasContato() {
+    document.querySelectorAll('.mask-cpf-cnpj').forEach(function (input) {
+        input.value = formatarCpfCnpjInput(input.value);
+
+        input.addEventListener('input', function () {
+            input.value = formatarCpfCnpjInput(input.value);
+        });
+    });
+
+    document.querySelectorAll('.mask-telefone').forEach(function (input) {
+        input.value = formatarTelefoneInput(input.value);
+
+        input.addEventListener('input', function () {
+            input.value = formatarTelefoneInput(input.value);
+        });
     });
 }
 
@@ -290,4 +309,41 @@ function numeroParaDecimalBR(value, casas = 2) {
 
 function decimalParaMoeda(value) {
     return numeroParaMoedaBR(parseFloat(value || 0));
+}
+
+function formatarCpfCnpjInput(value) {
+    const digitos = String(value || '').replace(/\D/g, '').slice(0, 14);
+
+    if (digitos.length <= 11) {
+        return digitos
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+            .replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+    }
+
+    return digitos
+        .replace(/(\d{2})(\d)/, '$1.$2')
+        .replace(/(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+        .replace(/(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4')
+        .replace(/(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5');
+}
+
+function formatarTelefoneInput(value) {
+    let digitos = String(value || '').replace(/\D/g, '');
+
+    if ((digitos.length === 12 || digitos.length === 13) && digitos.startsWith('55')) {
+        digitos = digitos.slice(2);
+    }
+
+    digitos = digitos.slice(0, 11);
+
+    if (digitos.length <= 10) {
+        return digitos
+            .replace(/(\d{2})(\d)/, '($1) $2')
+            .replace(/(\d{2})\) (\d{4})(\d)/, '$1) $2-$3');
+    }
+
+    return digitos
+        .replace(/(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{2})\) (\d{5})(\d)/, '$1) $2-$3');
 }

@@ -132,7 +132,7 @@
                                         <?= (string) $valorCampo('cliente_id') === (string) $cliente['id'] ? 'selected' : '' ?>
                                     >
                                         <?= esc($cliente['nome']) ?>
-                                        <?= !empty($cliente['whatsapp']) ? ' - ' . esc($cliente['whatsapp']) : '' ?>
+                                        <?= !empty($cliente['whatsapp']) ? ' - ' . esc(formatarTelefone($cliente['whatsapp'])) : '' ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>

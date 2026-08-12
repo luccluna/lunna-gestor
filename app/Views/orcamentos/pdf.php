@@ -240,12 +240,12 @@
 
                 <td style="width: 25%;">
                     <div class="label">CPF/CNPJ</div>
-                    <div class="value"><?= esc($orcamento['cpf_cnpj'] ?: '-') ?></div>
+                    <div class="value"><?= esc(formatarCpfCnpj($orcamento['cpf_cnpj'] ?? '') ?: '-') ?></div>
                 </td>
 
                 <td style="width: 25%;">
                     <div class="label">Contato</div>
-                    <div class="value"><?= esc($orcamento['whatsapp'] ?: $orcamento['telefone'] ?: '-') ?></div>
+                    <div class="value"><?= esc(formatarTelefone($orcamento['whatsapp'] ?: $orcamento['telefone'] ?: '') ?: '-') ?></div>
                 </td>
             </tr>
 

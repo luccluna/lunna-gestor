@@ -84,7 +84,7 @@ class Clientes extends BaseController
             return $redirect;
         }
 
-        $dados = $this->request->getPost();
+        $dados = $this->formatarDadosContato($this->request->getPost());
 
         if (!$this->clienteModel->insert($dados)) {
             return redirect()
@@ -138,7 +138,7 @@ class Clientes extends BaseController
                 ->with('erro', 'Cliente não encontrado.');
         }
 
-        $dados = $this->request->getPost();
+        $dados = $this->formatarDadosContato($this->request->getPost());
 
         if (!$this->clienteModel->update($id, $dados)) {
             return redirect()
@@ -176,5 +176,22 @@ class Clientes extends BaseController
         return redirect()
             ->to('/clientes')
             ->with('sucesso', 'Cliente removido com sucesso.');
+    }
+
+    private function formatarDadosContato(array $dados): array
+    {
+        if (array_key_exists('cpf_cnpj', $dados)) {
+            $dados['cpf_cnpj'] = formatarCpfCnpj($dados['cpf_cnpj']);
+        }
+
+        if (array_key_exists('telefone', $dados)) {
+            $dados['telefone'] = formatarTelefone($dados['telefone']);
+        }
+
+        if (array_key_exists('whatsapp', $dados)) {
+            $dados['whatsapp'] = formatarTelefone($dados['whatsapp']);
+        }
+
+        return $dados;
     }
 }

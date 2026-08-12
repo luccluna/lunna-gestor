@@ -83,7 +83,7 @@
                                             <strong><?= esc($cliente['nome']) ?></strong>
                                             <?php if (!empty($cliente['cpf_cnpj'])): ?>
                                                 <br>
-                                                <small class="text-muted"><?= esc($cliente['cpf_cnpj']) ?></small>
+                                                <small class="text-muted"><?= esc(formatarCpfCnpj($cliente['cpf_cnpj'])) ?></small>
                                             <?php endif; ?>
                                         </td>
 
@@ -92,7 +92,7 @@
                                         </td>
 
                                         <td>
-                                            <?= esc($cliente['whatsapp'] ?: $cliente['telefone'] ?: '-') ?>
+                                            <?= esc(formatarTelefone($cliente['whatsapp'] ?: $cliente['telefone'] ?: '') ?: '-') ?>
                                         </td>
 
                                         <td>

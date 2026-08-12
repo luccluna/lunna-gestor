@@ -108,7 +108,7 @@
                                             <?= esc($orcamento['cliente_nome']) ?>
                                             <?php if (!empty($orcamento['cliente_whatsapp'])): ?>
                                                 <br>
-                                                <small class="text-muted"><?= esc($orcamento['cliente_whatsapp']) ?></small>
+                                                <small class="text-muted"><?= esc(formatarTelefone($orcamento['cliente_whatsapp'])) ?></small>
                                             <?php endif; ?>
                                         </td>
 

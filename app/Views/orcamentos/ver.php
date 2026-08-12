@@ -75,7 +75,7 @@ $podeGerarPedido = empty($pedidoGerado)
                         <small class="text-muted">Cliente</small>
                         <h5 class="fw-bold mb-1"><?= esc($orcamento['cliente_nome']) ?></h5>
                         <p class="mb-0">
-                            <?= esc($orcamento['whatsapp'] ?: $orcamento['telefone'] ?: '-') ?>
+                            <?= esc(formatarTelefone($orcamento['whatsapp'] ?: $orcamento['telefone'] ?: '') ?: '-') ?>
                         </p>
                     </div>
 

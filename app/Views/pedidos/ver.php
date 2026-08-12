@@ -64,14 +64,14 @@
                             <div class="col-md-6">
                                 <small class="text-muted">Cliente</small>
                                 <h5 class="fw-bold mb-1"><?= esc($pedido['cliente_nome']) ?></h5>
-                                <p class="mb-0"><?= esc($pedido['cpf_cnpj'] ?: '-') ?></p>
+                                <p class="mb-0"><?= esc(formatarCpfCnpj($pedido['cpf_cnpj'] ?? '') ?: '-') ?></p>
                             </div>
 
                             <div class="col-md-6">
                                 <small class="text-muted">Contato</small>
                                 <p class="mb-0">
-                                    WhatsApp: <?= esc($pedido['whatsapp'] ?: '-') ?><br>
-                                    Telefone: <?= esc($pedido['telefone'] ?: '-') ?><br>
+                                    WhatsApp: <?= esc(formatarTelefone($pedido['whatsapp'] ?? '') ?: '-') ?><br>
+                                    Telefone: <?= esc(formatarTelefone($pedido['telefone'] ?? '') ?: '-') ?><br>
                                     E-mail: <?= esc($pedido['email'] ?: '-') ?>
                                 </p>
                             </div>

@@ -91,8 +91,9 @@
                             <input 
                                 type="text" 
                                 name="cpf_cnpj" 
-                                class="form-control" 
+                                class="form-control mask-cpf-cnpj"
                                 value="<?= esc(valorCampo('cpf_cnpj', $cliente)) ?>"
+                                inputmode="numeric"
                             >
                         </div>
 
@@ -101,8 +102,9 @@
                             <input 
                                 type="text" 
                                 name="telefone" 
-                                class="form-control" 
+                                class="form-control mask-telefone"
                                 value="<?= esc(valorCampo('telefone', $cliente)) ?>"
+                                inputmode="tel"
                             >
                         </div>
 
@@ -111,8 +113,9 @@
                             <input 
                                 type="text" 
                                 name="whatsapp" 
-                                class="form-control" 
+                                class="form-control mask-telefone"
                                 value="<?= esc(valorCampo('whatsapp', $cliente)) ?>"
+                                inputmode="tel"
                             >
                         </div>
 

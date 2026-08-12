@@ -109,7 +109,7 @@
                                             <?= esc($pedido['cliente_nome']) ?>
                                             <?php if (!empty($pedido['cliente_whatsapp'])): ?>
                                                 <br>
-                                                <small class="text-muted"><?= esc($pedido['cliente_whatsapp']) ?></small>
+                                                <small class="text-muted"><?= esc(formatarTelefone($pedido['cliente_whatsapp'])) ?></small>
                                             <?php endif; ?>
                                         </td>
 

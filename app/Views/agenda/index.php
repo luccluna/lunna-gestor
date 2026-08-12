@@ -160,7 +160,7 @@
                                             <?= esc($item['cliente_nome']) ?>
                                             <?php if (!empty($item['cliente_whatsapp'])): ?>
                                                 <br>
-                                                <small class="text-muted"><?= esc($item['cliente_whatsapp']) ?></small>
+                                                <small class="text-muted"><?= esc(formatarTelefone($item['cliente_whatsapp'])) ?></small>
                                             <?php endif; ?>
                                         </td>
 
