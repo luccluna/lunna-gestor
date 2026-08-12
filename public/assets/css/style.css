@@ -1571,6 +1571,58 @@ body {
         width: 100%;
     }
 
+    .dashboard-list-card {
+        overflow: hidden;
+    }
+
+    .dashboard-list-card .table-responsive {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .dashboard-list-card .table,
+    .dashboard-list-card .table-sm {
+        min-width: 0;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    .dashboard-list-card th,
+    .dashboard-list-card td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: top;
+    }
+
+    .dashboard-list-card .table-sm th,
+    .dashboard-list-card .table-sm td {
+        padding: 10px 6px;
+        font-size: 12px;
+    }
+
+    .dashboard-list-card .table-sm th {
+        font-size: 10px;
+    }
+
+    .dashboard-list-card .table-sm td strong,
+    .dashboard-list-card .table-sm td a.fw-bold {
+        font-size: 14px;
+        line-height: 1.25;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .dashboard-list-card .table-sm small,
+    .dashboard-list-card .badge {
+        font-size: 10px;
+        line-height: 1.2;
+    }
+
+    .dashboard-list-card .table-sm th:nth-child(n+4),
+    .dashboard-list-card .table-sm td:nth-child(n+4) {
+        display: none;
+    }
+
     form > .d-flex.justify-content-end.gap-2 {
         align-items: stretch;
         flex-direction: column;

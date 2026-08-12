@@ -158,7 +158,7 @@
         <div class="row g-4">
 
             <div class="col-md-6">
-                <div class="card card-dashboard h-100">
+                <div class="card card-dashboard dashboard-list-card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="fw-bold mb-0">Próximos agendamentos</h5>
@@ -239,7 +239,7 @@
             </div>
 
             <div class="col-md-6">
-                <div class="card card-dashboard h-100">
+                <div class="card card-dashboard dashboard-list-card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="fw-bold mb-0">Pedidos recentes</h5>
@@ -314,7 +314,7 @@
 
         </div>
 
-        <div class="card card-dashboard mt-4">
+        <div class="card card-dashboard dashboard-list-card mt-4">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="fw-bold mb-0">Orçamentos recentes</h5>
