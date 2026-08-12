@@ -30,9 +30,9 @@
                 </div>
             <?php endif; ?>
 
-        <div class="row g-3 mb-4">
+        <div class="row g-3 mb-4 dashboard-kpi-grid">
 
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted">Clientes cadastrados</small>
@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted">Orçamentos pendentes</small>
@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted">Aprovados no mês</small>
@@ -62,7 +62,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted">Pedidos em andamento</small>
@@ -72,11 +72,7 @@
                 </div>
             </div>
 
-        </div>
-
-        <div class="row g-3 mb-4">
-
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted">Instalações da semana</small>
@@ -86,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted">Pagamentos pendentes</small>
@@ -96,7 +92,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
                 <div class="card card-dashboard h-100 border-danger">
                     <div class="card-body">
                         <small class="text-muted">Pagamentos atrasados</small>
@@ -106,7 +102,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted">Recebido no mês</small>
@@ -118,11 +114,7 @@
                 </div>
             </div>
 
-        </div>
-
-        <div class="row g-3 mb-4">
-
-            <div class="col-md-6">
+            <div class="col-6 col-lg-3">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted">Saldo a receber</small>
@@ -134,7 +126,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-6 col-lg-3">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted">Faturamento previsto do mês</small>
@@ -146,11 +138,8 @@
                 </div>
             </div>
 
-        </div>
-
-        <?php if ($materiaisBaixoEstoque !== null): ?>
-            <div class="row g-3 mb-4">
-                <div class="col-md-4">
+            <?php if ($materiaisBaixoEstoque !== null): ?>
+                <div class="col-6 col-lg-3">
                     <div class="card card-dashboard h-100 <?= $materiaisBaixoEstoque > 0 ? 'border-danger' : '' ?>">
                         <div class="card-body">
                             <small class="text-muted">Materiais em baixo estoque</small>
@@ -163,8 +152,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        <?php endif; ?>
+            <?php endif; ?>
+        </div>
 
         <div class="row g-4">
 

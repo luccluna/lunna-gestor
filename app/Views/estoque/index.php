@@ -42,8 +42,8 @@
             ];
         ?>
 
-        <div class="row g-3 mb-4">
-            <div class="col-md-4">
+        <div class="row g-3 mb-4 estoque-kpi-grid">
+            <div class="col-6 col-lg-4">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted text-uppercase fw-bold">Materiais ativos</small>
@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-6 col-lg-4">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted text-uppercase fw-bold">Baixo estoque</small>
@@ -61,7 +61,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-6 col-lg-4">
                 <div class="card card-dashboard h-100">
                     <div class="card-body">
                         <small class="text-muted text-uppercase fw-bold">Valor estimado</small>

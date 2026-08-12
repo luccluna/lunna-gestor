@@ -873,6 +873,43 @@ body {
     font-size: 12px;
 }
 
+.dashboard-kpi-grid,
+.estoque-kpi-grid {
+    align-items: stretch;
+}
+
+.dashboard-kpi-grid > [class^="col-"],
+.dashboard-kpi-grid > [class*=" col-"],
+.estoque-kpi-grid > [class^="col-"],
+.estoque-kpi-grid > [class*=" col-"] {
+    display: flex;
+}
+
+.dashboard-kpi-grid .card-dashboard,
+.estoque-kpi-grid .card-dashboard {
+    width: 100%;
+    min-height: 116px;
+}
+
+.dashboard-kpi-grid .card-body,
+.estoque-kpi-grid .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100%;
+}
+
+.dashboard-kpi-grid h3,
+.estoque-kpi-grid h3 {
+    line-height: 1.08;
+    word-break: normal;
+}
+
+.dashboard-kpi-grid small,
+.estoque-kpi-grid small {
+    line-height: 1.25;
+}
+
 .progress {
     border-radius: 999px;
     background: #e5e7eb;
@@ -1415,6 +1452,50 @@ body {
 
     .main-content .row {
         --bs-gutter-x: 1rem;
+    }
+
+    .dashboard-kpi-grid,
+    .estoque-kpi-grid {
+        --bs-gutter-x: .75rem;
+        --bs-gutter-y: .75rem;
+    }
+
+    .dashboard-kpi-grid .card-dashboard,
+    .estoque-kpi-grid .card-dashboard {
+        min-height: 92px;
+        box-shadow: 0 6px 16px rgba(15, 23, 42, .05);
+    }
+
+    .dashboard-kpi-grid .card-body,
+    .estoque-kpi-grid .card-body {
+        padding: 12px;
+    }
+
+    .dashboard-kpi-grid h3,
+    .estoque-kpi-grid h3 {
+        font-size: 20px;
+        margin-top: 6px !important;
+    }
+
+    .dashboard-kpi-grid small,
+    .estoque-kpi-grid small {
+        font-size: 10px;
+    }
+
+    .dashboard-kpi-grid .card-body small:last-child {
+        min-height: 2.5em;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    .dashboard-kpi-grid .btn,
+    .estoque-kpi-grid .btn {
+        width: 100%;
+        margin-top: 10px !important;
+        padding: 5px 8px;
+        font-size: 11px;
     }
 
     .pedido-header {
